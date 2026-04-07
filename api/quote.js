@@ -9,8 +9,7 @@
 // ============================================================
 
 // Fichier : api/quote.js (sur Vercel)
-export default async function handler(req, res) {
-  // CORS — autorise ton app mobile
+module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET');
 
@@ -30,8 +29,7 @@ export default async function handler(req, res) {
 
         const response = await fetch(url, {
           headers: {
-            'User-Agent':
-              'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
             'Accept': 'application/json',
           },
         });
@@ -55,11 +53,8 @@ export default async function handler(req, res) {
           previousClose: meta.chartPreviousClose,
           currency: meta.currency,
           change: meta.regularMarketPrice - meta.chartPreviousClose,
-          changePercent:
-            ((meta.regularMarketPrice - meta.chartPreviousClose) /
-              meta.chartPreviousClose) *
-            100,
-          marketState: meta.marketState, // REGULAR / PRE / POST / CLOSED
+          changePercent: ((meta.regularMarketPrice - meta.chartPreviousClose) / meta.chartPreviousClose) * 100,
+          marketState: meta.marketState,
           timestamp: new Date().toISOString(),
         };
       } catch (err) {
@@ -71,4 +66,4 @@ export default async function handler(req, res) {
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
-}
+};
